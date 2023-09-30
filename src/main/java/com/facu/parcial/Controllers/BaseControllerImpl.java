@@ -12,7 +12,6 @@ public abstract class BaseControllerImpl <E extends BaseEntidad, S extends BaseS
     @Autowired
     protected S servicio;
 
-
     @GetMapping("")
     public ResponseEntity<?> getAll() {
         try {

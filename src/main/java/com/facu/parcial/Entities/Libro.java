@@ -27,7 +27,6 @@ public class Libro extends BaseEntidad{
     private String titulo;
 
     @ManyToMany(cascade = CascadeType.REFRESH)
-    @EqualsAndHashCode.Exclude
     private List<Autor> autores;
 
 }

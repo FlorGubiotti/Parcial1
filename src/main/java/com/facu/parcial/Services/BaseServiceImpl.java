@@ -2,6 +2,7 @@ package com.facu.parcial.Services;
 
 import com.facu.parcial.Entities.BaseEntidad;
 import com.facu.parcial.Repositories.BaseRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 public abstract class BaseServiceImpl<E extends BaseEntidad, ID extends Serializable> implements BaseService<E, ID> {
     protected BaseRepository<E,ID> baseRepository;
-    public BaseServiceImpl(BaseRepository<E, ID> baseRepository) {
+    public BaseServiceImpl(BaseRepository baseRepository) {
         this.baseRepository = baseRepository;
     }
 
@@ -18,8 +19,7 @@ public abstract class BaseServiceImpl<E extends BaseEntidad, ID extends Serializ
     @Transactional
     public List<E> findALL() throws Exception {
         try {
-            List<E> entities = baseRepository.findAll();
-            return entities;
+            return baseRepository.findAll();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -63,14 +63,13 @@ public abstract class BaseServiceImpl<E extends BaseEntidad, ID extends Serializ
     @Override
     @Transactional
     public boolean delete(ID id) throws Exception {
-        try{
-            if(baseRepository.existsById(id)){
-                baseRepository.deleteById(id);
-                return true;
-            }
-            throw new Exception();
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
+        Optional<E> optionalEntity = baseRepository.findById(id);
+        if (optionalEntity.isPresent()) {
+            baseRepository.delete(optionalEntity.get());
+            return true; // Indica que la entidad fue eliminada con exito
+        } else {
+            throw new EntityNotFoundException("No se encontro la entidad con ID: " + id);
         }
     }
+
 }
