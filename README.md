@@ -6,10 +6,9 @@ Esta API REST ha sido creada para abordar de manera eficiente la gestión de dat
 
 1. Crear una carpeta donde se desee clonar el dispositivo
 2. En tu consola, escribir el siguiente comando:
-   <div class="highlight">
-    git clone https://github.com/FlorGubiotti/Parcial1.git
-    <button onclick="copyToClipboard(this)">Copiar</button>
-  </div>
+   ```
+   $ git clone https://github.com/FlorGubiotti/Parcial1.git
+   ```
 3. Accede al proyecyo desde tu IDE (éste proyecto fue realizado desde IntelliJ IDEA).
 
 Como otra opcion puedes:
